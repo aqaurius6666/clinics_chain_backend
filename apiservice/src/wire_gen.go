@@ -9,8 +9,8 @@ package main
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/minh1611/go_example/apiservice/api"
-	"github.com/minh1611/go_example/apiservice/service"
+	"github.com/minh1611/go_structure/apiservice/src/api"
+	"github.com/minh1611/go_structure/apiservice/src/service"
 )
 
 // Injectors from server.wire.go:

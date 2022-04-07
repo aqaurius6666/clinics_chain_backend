@@ -7,7 +7,7 @@ import (
 	"context"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_example/apiservice/api"
+	"github.com/minh1611/go_structure/apiservice/src/api"
 )
 
 type Server struct {
