@@ -9,21 +9,21 @@ package main
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/minh1611/go_structure/apiservice/src/api"
-	"github.com/minh1611/go_structure/apiservice/src/service"
+	"github.com/minh1611/go_structure/apiservice/src/internal/api"
+	"github.com/minh1611/go_structure/apiservice/src/internal/service"
 )
 
 // Injectors from server.wire.go:
 
 func InitMainServer(ctx context.Context) (*Server, error) {
 	engine := gin.New()
-	playerService := service.PlayerService{}
-	playerController := service.PlayerController{
-		S: playerService,
+	userService := service.UserService{}
+	userController := service.UserController{
+		S: userService,
 	}
 	apiService := &api.ApiService{
-		G:      engine,
-		Player: playerController,
+		G:    engine,
+		User: userController,
 	}
 	server := &Server{
 		ApiServer: apiService,

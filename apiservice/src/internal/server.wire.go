@@ -1,4 +1,4 @@
-// go:build wireinject
+//go:build wireinject
 // +build wireinject
 
 package main
@@ -7,7 +7,7 @@ import (
 	"context"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/apiservice/src/api"
+	"github.com/minh1611/go_structure/apiservice/src/internal/api"
 )
 
 type Server struct {
