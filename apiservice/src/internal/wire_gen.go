@@ -10,14 +10,34 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/minh1611/go_structure/apiservice/src/internal/api"
+	"github.com/minh1611/go_structure/apiservice/src/internal/db"
+	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
+	"github.com/minh1611/go_structure/apiservice/src/internal/model"
 	"github.com/minh1611/go_structure/apiservice/src/internal/service"
 )
 
 // Injectors from server.wire.go:
 
-func InitMainServer(ctx context.Context) (*Server, error) {
+func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 	engine := gin.New()
-	userService := service.UserService{}
+	dbDsn := opts.DBDsn
+	gormDB, err := db.ConnectGorm(dbDsn)
+	if err != nil {
+		return nil, err
+	}
+	dbInterfaces := my.InterfaceProvider()
+	serverCDBRepo := &my.ServerCDBRepo{
+		Db:         gormDB,
+		Context:    ctx,
+		Interfaces: dbInterfaces,
+	}
+	serverModel := &model.ServerModel{
+		Ctx:  ctx,
+		Repo: serverCDBRepo,
+	}
+	userService := service.UserService{
+		Model: serverModel,
+	}
 	userController := service.UserController{
 		S: userService,
 	}
@@ -27,6 +47,7 @@ func InitMainServer(ctx context.Context) (*Server, error) {
 	}
 	server := &Server{
 		ApiServer: apiService,
+		MainRepo:  serverCDBRepo,
 	}
 	return server, nil
 }
@@ -35,4 +56,9 @@ func InitMainServer(ctx context.Context) (*Server, error) {
 
 type Server struct {
 	ApiServer *api.ApiService
+	MainRepo  db.ServerRepo
+}
+
+type ServerOptions struct {
+	DBDsn db.DBDsn
 }

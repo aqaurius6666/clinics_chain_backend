@@ -8,4 +8,5 @@ func (s *ApiService) UserEndPoint(g *gin.RouterGroup) {
 	userGroup := g.Group("/user")
 
 	userGroup.GET("/", s.User.HandleGet)
+	userGroup.POST("/", s.User.HandlePost)
 }
