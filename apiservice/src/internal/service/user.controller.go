@@ -6,16 +6,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"github.com/minh1611/go_structure/apiservice/src/internal/lib"
+	"github.com/minh1611/go_structure/apiservice/src/pb"
 )
 
 var UserSet = wire.NewSet(wire.Struct(new(UserController), "*"), wire.Struct(new(UserService), "*"))
 
 type UserController struct {
-	S UserService
+	S *UserService
 }
 
-type Test struct {
+type User struct {
 	Name string
+	Age  int16
 }
 
 func (s *UserController) HandleGet(ctx *gin.Context) {
@@ -25,10 +27,10 @@ func (s *UserController) HandleGet(ctx *gin.Context) {
 }
 
 func (s *UserController) HandlePost(ctx *gin.Context) {
-	req := Test{}
+	req := pb.User{}
 	if err := lib.GetBody(ctx, &req); err != nil {
 		lib.BadRequest(ctx, err)
 		return
 	}
-	lib.Success(ctx, req)
+	lib.Success(ctx, &req)
 }

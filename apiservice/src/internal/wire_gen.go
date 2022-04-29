@@ -35,7 +35,7 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 		Ctx:  ctx,
 		Repo: serverCDBRepo,
 	}
-	userService := service.UserService{
+	userService := &service.UserService{
 		Model: serverModel,
 	}
 	userController := service.UserController{
