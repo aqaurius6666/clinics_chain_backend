@@ -15,6 +15,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	// Get variable from .env
 	err := godotenv.Load("../../deploy/dev/.env")
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
@@ -30,8 +31,8 @@ func main() {
 
 	// Auto migrate entity to sql "Table"
 	dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
-	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
-	
+	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables)
+
 	// Create route
 	mainServer.ApiServer.RegisterEndPoint()
 
