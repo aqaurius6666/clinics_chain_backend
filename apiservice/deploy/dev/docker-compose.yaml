@@ -21,7 +21,7 @@ services:
       - main
     depends_on:
       - mysql
-    entrypoint: [ "/app/wait-for.sh", "mysql:3306", "--" ]
+    entrypoint: [ "/app/wait-for-it.sh", "mysql:3306" ]
     command: [ "./out/go-example" ]
 volumes:
   mysql-data:
