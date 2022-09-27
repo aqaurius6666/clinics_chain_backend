@@ -18,6 +18,9 @@ type UserController struct {
 type User struct {
 	Name string
 	Age  int16
+	PhoneNumber string
+	Email string
+	Password string
 }
 
 func (s *UserController) HandleGet(ctx *gin.Context) {

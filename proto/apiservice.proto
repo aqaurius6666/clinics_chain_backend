@@ -2,8 +2,25 @@ syntax = "proto3";
 package apiservice;
 option go_package = "../apiservice/src/pb";
 
-message User {
-   string Name = 1;
-   int32 Age = 2;
-   string PhoneNumber = 3;
+
+service PostUser {
+   rpc CreateNewUser(NewUser) returns (User) {}
 }
+
+message NewUser {
+   string name = 1;
+   int32 age = 2;
+   string phoneNumber = 3;
+   string email = 4;
+   string password = 5;
+}
+
+message User {
+   string name = 1;
+   int32 age = 2;
+   string phoneNumber = 3;
+   string email = 4;
+   string password = 5;
+   int32 id = 6;
+}
+

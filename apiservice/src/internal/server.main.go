@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-
 	"github.com/joho/godotenv"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
@@ -31,7 +30,8 @@ func main() {
 
 	// Auto migrate entity to sql "Table"
 	dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
-	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables)
+	// doc for dbTable...: https://go.dev/ref/spec#Passing_arguments_to_..._parameters
+	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
 
 	// Create route
 	mainServer.ApiServer.RegisterEndPoint()
