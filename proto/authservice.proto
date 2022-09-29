@@ -1,0 +1,26 @@
+syntax = "proto3";
+package authservice;
+option go_package = "../authservice/src/pb";
+
+
+service PostUser {
+   rpc CreateNewUser(NewUser) returns (User) {}
+}
+
+message NewUser {
+   string name = 1;
+   int32 age = 2;
+   string phoneNumber = 3;
+   string email = 4;
+   string password = 5;
+}
+
+message User {
+   string name = 1;
+   int32 age = 2;
+   string phoneNumber = 3;
+   string email = 4;
+   string password = 5;
+   int32 id = 6;
+}
+
