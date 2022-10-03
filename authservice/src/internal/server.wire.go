@@ -7,13 +7,13 @@ import (
 	"context"
 
 	"github.com/google/wire"
-	//"github.com/minh1611/go_structure/authservice/src/internal/api"
-	//"github.com/minh1611/go_structure/authservice/src/internal/db"
-	//"github.com/minh1611/go_structure/authservice/src/internal/model"
+	"github.com/minh1611/go_structure/authservice/src/internal/api"
+	"github.com/minh1611/go_structure/authservice/src/internal/db"
+	"github.com/minh1611/go_structure/authservice/src/internal/model"
 )
 
 type Server struct {
-	ApiServer *api.AuthService
+	ApiServer *api.ApiServer
 	MainRepo  db.ServerRepo
 }
 
@@ -24,7 +24,7 @@ type ServerOptions struct {
 func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 	wire.Build(
 		wire.FieldsOf(&opts, "DBDsn"),
-		api.AuthServiceSet,
+		api.ApiServerSet,
 		model.ServerModelSet,
 		db.ServerRepoSet,
 		wire.Struct(new(Server), "*"),

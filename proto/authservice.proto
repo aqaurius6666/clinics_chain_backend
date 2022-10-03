@@ -3,7 +3,7 @@ package authservice;
 option go_package = "../authservice/src/pb";
 
 
-service PostUser {
+service AuthService {
    rpc CreateNewUser(NewUser) returns (User) {}
 }
 

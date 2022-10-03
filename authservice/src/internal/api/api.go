@@ -1,22 +1,20 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/authservice/src/internal/service"
+	"github.com/minh1611/go_structure/authservice/src/internal/db"
+	"github.com/minh1611/go_structure/authservice/src/internal/model"
+	"github.com/minh1611/go_structure/authservice/src/pb"
 )
 
-var AuthServiceSet = wire.NewSet(wire.Struct(new(AuthService), "*"),
-	gin.New,
-	service.UserSet,
+var ApiServerSet = wire.NewSet(wire.Struct(new(ApiServer), "*"))
+
+var (
+	_ pb.AuthServiceServer = (*ApiServer)(nil)
 )
 
-type AuthService struct {
-	G    *gin.Engine
-	User service.UserController
-}
-
-func (s *AuthService) RegisterEndPoint() {
-	api := s.G.Group("/api")
-	s.UserEndPoint(api)
+type ApiServer struct {
+	pb.UnimplementedAuthServiceServer `wire:"-"`
+	Model                             model.Server
+	Repo                              db.ServerRepo
 }

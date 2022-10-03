@@ -4,13 +4,19 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
+	"net/http"
 	"os"
+	"sync"
+
 	"github.com/joho/godotenv"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
 )
 
 func main() {
+	var wg sync.WaitGroup
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -20,6 +26,12 @@ func main() {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}
 
+	// Start http server
+	httpListener, err := net.Listen("tcp", ":"+os.Getenv("HTTP_PORT"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	mainServer, err := InitMainServer(ctx, ServerOptions{
 		DBDsn: db.DBDsn(os.Getenv("CONFIG_DB_URI")),
 	})
@@ -31,11 +43,23 @@ func main() {
 	// Auto migrate entity to sql "Table"
 	dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
 	// doc for dbTable...: https://go.dev/ref/spec#Passing_arguments_to_..._parameters
-	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
+	err = mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	// Create route
-	mainServer.ApiServer.RegisterEndPoint()
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		// Create route
+		mainServer.ApiServer.RegisterEndPoint()
 
-	// Run server
-	mainServer.ApiServer.G.Run(":" + os.Getenv("PORT"))
+		if err := http.Serve(httpListener, mainServer.ApiServer.G); err != nil {
+			fmt.Printf("failed to serve: %v", err)
+			return
+		}
+		fmt.Println("App is running at port " + os.Getenv("HTTP_PORT"))
+	}()
+
+	wg.Wait()
 }

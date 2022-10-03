@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// PostUserClient is the client API for PostUser service.
+// AuthServiceClient is the client API for AuthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PostUserClient interface {
+type AuthServiceClient interface {
 	CreateNewUser(ctx context.Context, in *NewUser, opts ...grpc.CallOption) (*User, error)
 }
 
-type postUserClient struct {
+type authServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPostUserClient(cc grpc.ClientConnInterface) PostUserClient {
-	return &postUserClient{cc}
+func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
+	return &authServiceClient{cc}
 }
 
-func (c *postUserClient) CreateNewUser(ctx context.Context, in *NewUser, opts ...grpc.CallOption) (*User, error) {
+func (c *authServiceClient) CreateNewUser(ctx context.Context, in *NewUser, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.cc.Invoke(ctx, "/authservice.PostUser/CreateNewUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/authservice.AuthService/CreateNewUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// PostUserServer is the server API for PostUser service.
-// All implementations must embed UnimplementedPostUserServer
+// AuthServiceServer is the server API for AuthService service.
+// All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
-type PostUserServer interface {
+type AuthServiceServer interface {
 	CreateNewUser(context.Context, *NewUser) (*User, error)
-	mustEmbedUnimplementedPostUserServer()
+	mustEmbedUnimplementedAuthServiceServer()
 }
 
-// UnimplementedPostUserServer must be embedded to have forward compatible implementations.
-type UnimplementedPostUserServer struct {
+// UnimplementedAuthServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAuthServiceServer struct {
 }
 
-func (UnimplementedPostUserServer) CreateNewUser(context.Context, *NewUser) (*User, error) {
+func (UnimplementedAuthServiceServer) CreateNewUser(context.Context, *NewUser) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewUser not implemented")
 }
-func (UnimplementedPostUserServer) mustEmbedUnimplementedPostUserServer() {}
+func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
-// UnsafePostUserServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PostUserServer will
+// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AuthServiceServer will
 // result in compilation errors.
-type UnsafePostUserServer interface {
-	mustEmbedUnimplementedPostUserServer()
+type UnsafeAuthServiceServer interface {
+	mustEmbedUnimplementedAuthServiceServer()
 }
 
-func RegisterPostUserServer(s grpc.ServiceRegistrar, srv PostUserServer) {
-	s.RegisterService(&PostUser_ServiceDesc, srv)
+func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
+	s.RegisterService(&AuthService_ServiceDesc, srv)
 }
 
-func _PostUser_CreateNewUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthService_CreateNewUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NewUser)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PostUserServer).CreateNewUser(ctx, in)
+		return srv.(AuthServiceServer).CreateNewUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/authservice.PostUser/CreateNewUser",
+		FullMethod: "/authservice.AuthService/CreateNewUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PostUserServer).CreateNewUser(ctx, req.(*NewUser))
+		return srv.(AuthServiceServer).CreateNewUser(ctx, req.(*NewUser))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// PostUser_ServiceDesc is the grpc.ServiceDesc for PostUser service.
+// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PostUser_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "authservice.PostUser",
-	HandlerType: (*PostUserServer)(nil),
+var AuthService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "authservice.AuthService",
+	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateNewUser",
-			Handler:    _PostUser_CreateNewUser_Handler,
+			Handler:    _AuthService_CreateNewUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

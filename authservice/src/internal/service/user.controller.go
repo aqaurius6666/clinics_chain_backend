@@ -15,25 +15,30 @@ type UserController struct {
 	S *UserService
 }
 
-type User struct {
-	Name string
-	Age  int16
-	PhoneNumber string
-	Email string
-	Password string
-}
-
-func (s *UserController) HandleGet(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
+func (s *UserController) HandleGet(g *gin.Context) {
+	g.JSON(http.StatusOK, gin.H{
 		"message": "ok",
 	})
 }
 
-func (s *UserController) HandlePost(ctx *gin.Context) {
-	req := pb.User{}
-	if err := lib.GetBody(ctx, &req); err != nil {
-		lib.BadRequest(ctx, err)
+func (s *UserController) HandlePost(g *gin.Context) {
+	req := pb.NewUser{
+		Name: g.GetString("name"),
+		//Age:         g.GetString("age"),
+		PhoneNumber: g.GetString("phoneNumber"),
+		Email:       g.GetString("email"),
+		Password:    g.GetString("password"),
+	}
+	if err := lib.GetBody(g, &req); err != nil {
+		lib.BadRequest(g, err)
 		return
 	}
-	lib.Success(ctx, &req)
+	res := pb.User{
+		Name:        req.Name,
+		PhoneNumber: req.PhoneNumber,
+		Email:       req.Email,
+		Password:    req.Password,
+		Id:          1,
+	}
+	lib.Success(g, &res)
 }

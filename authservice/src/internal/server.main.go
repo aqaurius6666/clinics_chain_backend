@@ -1,41 +1,67 @@
 package main
 
 import (
-	// "context"
-	// "fmt"
-	// "log"
-	// "os"
-	// "github.com/joho/godotenv"
-	// "github.com/minh1611/go_structure/authservice/src/internal/db"
+	"context"
+	"fmt"
+	"log"
+	"net"
+	"os"
+	"sync"
+
+	"github.com/joho/godotenv"
+	"github.com/minh1611/go_structure/authservice/src/internal/db"
+	"github.com/minh1611/go_structure/authservice/src/internal/db/my"
+	"github.com/minh1611/go_structure/authservice/src/pb"
+	"google.golang.org/grpc"
 )
 
 func main() {
-	// ctx, cancel := context.WithCancel(context.Background())
-	// defer cancel()
+	var wg sync.WaitGroup
 
-	// // Get variable from .env
-	// err := godotenv.Load("../../deploy/dev/.env")
-	// if err != nil {
-	// 	log.Fatalf("Some error occured. Err: %s", err)
-	// }
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-	// mainServer, err := InitMainServer(ctx, ServerOptions{
-	// 	DBDsn: db.DBDsn(os.Getenv("CONFIG_DB_URI")),
-	// })
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
+	// Get variable from .env
+	err := godotenv.Load("../../deploy/dev/.env")
+	if err != nil {
+		log.Fatalf("Some error occured. Err: %s", err)
+	}
 
-	// // Auto migrate entity to sql "Table"
-	// dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
-	// // doc for dbTable...: https://go.dev/ref/spec#Passing_arguments_to_..._parameters
-	// mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
+	mainServer, err := InitMainServer(ctx, ServerOptions{
+		DBDsn: db.DBDsn(os.Getenv("CONFIG_DB_URI")),
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-	// // Create route
-	// mainServer.Authserver.RegisterEndPoint()
+	// Auto migrate entity to sql "Table"
+	// doc for dbTable...: https://go.dev/ref/spec#Passing_arguments_to_..._parameters
+	dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
+	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
 
-	// // Run server
-	// mainServer.AuthService.G.Run(":" + os.Getenv("PORT"))
+	// Start GRPC Server
+	grpcListener, err := net.Listen("tcp", ":"+os.Getenv("GRPC_PORT"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer func() { _ = grpcListener.Close() }()
+
+	var srv *grpc.Server
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		if err := srv.Serve(grpcListener); err != nil {
+			fmt.Println(err)
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		// Register
+		pb.RegisterAuthServiceServer(srv, mainServer.ApiServer)
+	}()
+
+	wg.Wait()
 }
-

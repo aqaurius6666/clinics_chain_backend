@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "proto"
+		},
+		{
+			"path": "apiservice"
+		},
+		{
+			"path": "authservice"
+		}
+	],
+	"settings": {}
+}
