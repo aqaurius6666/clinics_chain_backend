@@ -1,6 +1,6 @@
 syntax = "proto3";
 package authservice;
-option go_package = "../authservice/src/pb";
+option go_package = "../authservice/src/pb;../apiservice/src";
 
 
 service AuthService {

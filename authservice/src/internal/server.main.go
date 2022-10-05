@@ -48,19 +48,15 @@ func main() {
 	}
 	defer func() { _ = grpcListener.Close() }()
 
-	var srv *grpc.Server
+	srv := grpc.NewServer()
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if err := srv.Serve(grpcListener); err != nil {
-			fmt.Println(err)
-		}
-	}()
-
-	wg.Add(1)
-	go func() {
-		// Register
 		pb.RegisterAuthServiceServer(srv, mainServer.ApiServer)
+		fmt.Println("GRPC server is running at port " + os.Getenv("GRPC_PORT"))
+		if err := srv.Serve(grpcListener); err != nil {
+			log.Fatalf("Fail to server: %v", err);
+		}
 	}()
 
 	wg.Wait()
