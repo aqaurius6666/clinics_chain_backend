@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"github.com/minh1611/go_structure/authservice/src/internal/lib"
-	"github.com/minh1611/go_structure/authservice/src/pb"
+	"github.com/minh1611/go_structure/authservice/src/pb/authpb"
 )
 
 var UserSet = wire.NewSet(wire.Struct(new(UserController), "*"), wire.Struct(new(UserService), "*"))
@@ -22,7 +22,7 @@ func (s *UserController) HandleGet(g *gin.Context) {
 }
 
 func (s *UserController) HandlePost(g *gin.Context) {
-	req := pb.NewUser{
+	req := authpb.NewUser{
 		Name: g.GetString("name"),
 		//Age:         g.GetString("age"),
 		PhoneNumber: g.GetString("phoneNumber"),
@@ -33,7 +33,7 @@ func (s *UserController) HandlePost(g *gin.Context) {
 		lib.BadRequest(g, err)
 		return
 	}
-	res := pb.User{
+	res := authpb.User{
 		Name:        req.Name,
 		PhoneNumber: req.PhoneNumber,
 		Email:       req.Email,

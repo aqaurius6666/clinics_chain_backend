@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/google/wire"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
 	"golang.org/x/xerrors"
@@ -22,5 +24,6 @@ func ConnectGorm(dsn DBDsn) (db *gorm.DB, err error) {
 	if err != nil {
 		return nil, xerrors.Errorf("%w", err)
 	}
+	fmt.Println("CONNECT DB SUCCESSFULLY")
 	return db, err
 }

@@ -1,27 +1,27 @@
 version: "3.7"
 networks:
   main:
-    name: go-example
-services:
-  mysql:
-    image: mysql:8.0.29
+    name: go-example-authservice
+# services:
+#   mysql:
+#     image: mysql:8.0.29
+#     ports:
+#       - 3306:3306
+#     environment:
+#       - MYSQL_ROOT_PASSWORD=root
+#     volumes:
+#       - "mysql-data:/var/bin/mysql"
+#     networks:
+#       - main
+  go-example-authservice: 
+    image: cosmtrek/air
     ports:
-      - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-    volumes:
-      - "mysql-data:/var/bin/mysql"
-    networks:
-      - main
-  go-example: 
-    image: minh1611/go_example
-    ports:
-      - 8080:8080
+      - 8081:8081
     networks:
       - main
     depends_on:
       - mysql
     entrypoint: [ "/app/wait-for-it.sh", "mysql:3306" ]
     command: [ "./out/go-example" ]
-volumes:
-  mysql-data:
+# volumes:
+#  mysql-data:

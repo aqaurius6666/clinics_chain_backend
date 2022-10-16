@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/minh1611/go_structure/authservice/src/pb"
+	"github.com/minh1611/go_structure/authservice/src/pb/authpb"
 )
 
-func (s *ApiServer) CreateNewUser(ctx context.Context, user *pb.NewUser) (*pb.User, error) {
+func (s *ApiServer) CreateNewUser(ctx context.Context, user *authpb.NewUser) (*authpb.User, error) {
 	fmt.Println(user.Name)
-	return &pb.User{
+	return &authpb.User{
 		Name: user.Name,
+		Id: 1,
 	}, nil
 }
