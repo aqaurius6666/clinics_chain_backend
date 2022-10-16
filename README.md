@@ -1,6 +1,9 @@
 1. Run server
-Option 1: Go to internal and type 'go run .'
-Option 2: Go to internal and type 'go build -o ./out/go-example' --> then type './out/go-example'
+- Run 'run.sh'
+  
+2. Migrate from proto
+- Run 'gen-proto.sh'
 
-2. Migrate struct from proto
-- Go to proto, type 'protoc --go-grpc_out=. *.proto --go_out=. *.proto'
+3. Create and running db in docker (in folder initialize)
+- Create database docker container "db-container.sh"
+- Running database "run-db.sh"
