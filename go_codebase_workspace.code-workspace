@@ -4,10 +4,10 @@
 			"path": "proto"
 		},
 		{
-			"path": "apiservice"
+			"path": "authservice"
 		},
 		{
-			"path": "authservice"
+			"path": "apiservice"
 		}
 	],
 	"settings": {}

@@ -8,7 +8,7 @@ import (
 )
 
 func (s *ApiServer) CreateNewUser(ctx context.Context, user *authpb.NewUser) (*authpb.User, error) {
-	fmt.Println(user.Name)
+	
 	return &authpb.User{
 		Name: user.Name,
 		Id: 1,
