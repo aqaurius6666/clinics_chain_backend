@@ -10,6 +10,7 @@ import (
 	"sync"
 
 	"github.com/joho/godotenv"
+	//"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
 )
