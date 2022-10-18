@@ -14,6 +14,7 @@ import (
 	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
 	"github.com/minh1611/go_structure/apiservice/src/internal/model"
 	"github.com/minh1611/go_structure/apiservice/src/internal/service"
+	"github.com/minh1611/go_structure/apiservice/src/services/authservice"
 )
 
 // Injectors from server.wire.go:
@@ -31,9 +32,19 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 		Context:    ctx,
 		Interfaces: dbInterfaces,
 	}
+	authServiceAddr := opts.AuthServiceAddr
+	authServiceClient, err := authservice.ConnectClient(ctx, authServiceAddr)
+	if err != nil {
+		return nil, err
+	}
+	serviceGRPC := authservice.ServiceGRPC{
+		Ctx:    ctx,
+		Client: authServiceClient,
+	}
 	serverModel := &model.ServerModel{
 		Ctx:  ctx,
 		Repo: serverCDBRepo,
+		Auth: serviceGRPC,
 	}
 	userService := &service.UserService{
 		Model: serverModel,
@@ -60,5 +71,6 @@ type Server struct {
 }
 
 type ServerOptions struct {
-	DBDsn db.DBDsn
+	DBDsn           db.DBDsn
+	AuthServiceAddr authservice.AuthServiceAddr
 }
