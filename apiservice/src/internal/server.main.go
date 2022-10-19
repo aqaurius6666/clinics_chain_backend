@@ -13,6 +13,7 @@ import (
 	//"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
+	"github.com/minh1611/go_structure/apiservice/src/services/authservice"
 )
 
 func main() {
@@ -34,7 +35,8 @@ func main() {
 		return
 	}
 	mainServer, err := InitMainServer(ctx, ServerOptions{
-		DBDsn: db.DBDsn(os.Getenv("CONFIG_DB_URI")),
+		DBDsn:           db.DBDsn(os.Getenv("CONFIG_DB_URI")),
+		AuthServiceAddr: authservice.AuthServiceAddr(os.Getenv("CONFIG_AUTHSERVICE_ADDRESS")),
 	})
 	if err != nil {
 		fmt.Println(err)
