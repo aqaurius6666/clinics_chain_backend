@@ -21,6 +21,6 @@ message User {
    string phoneNumber = 3;
    string email = 4;
    string password = 5;
-   int32 id = 6;
+   string id = 6;
 }
 

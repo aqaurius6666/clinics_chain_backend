@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/minh1611/go_structure/apiservice/src/internal/api"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
+	"github.com/minh1611/go_structure/apiservice/src/internal/db/psql"
 	"github.com/minh1611/go_structure/apiservice/src/internal/model"
 	"github.com/minh1611/go_structure/apiservice/src/internal/service"
 	"github.com/minh1611/go_structure/apiservice/src/services/authservice"
@@ -26,8 +26,8 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	dbInterfaces := my.InterfaceProvider()
-	serverCDBRepo := &my.ServerCDBRepo{
+	dbInterfaces := psql.InterfaceProvider()
+	serverCDBRepo := &psql.ServerCDBRepo{
 		Db:         gormDB,
 		Context:    ctx,
 		Interfaces: dbInterfaces,

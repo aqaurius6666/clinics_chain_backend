@@ -3,7 +3,8 @@ package model
 import (
 	"context"
 
-	"github.com/minh1611/go_structure/apiservice/src/pb/authpb"
+	"github.com/minh1611/go_structure/apiservice/src/internal/db/user"
+	//"github.com/minh1611/go_structure/apiservice/src/pb/authpb"
 )
 
 var (
@@ -11,11 +12,14 @@ var (
 )
 
 type UserModel interface {
-	CreateNewUser(ctx context.Context, name string, age int) (*authpb.User, error)
+	CreateNewUser(ctx context.Context, name *string, age *int) (*user.User, error)
 }
 
-func (s *ServerModel) CreateNewUser(ctx context.Context, name string, age int) (*authpb.User, error) {
-	user, err := s.Auth.CreateNewUser(ctx, name, age)
+func (s *ServerModel) CreateNewUser(ctx context.Context, name *string, age *int) (*user.User, error) {
+	user, err := s.Repo.InsertUser(ctx, &user.User{
+		Name: name,
+		Age: age,
+	})
 	if err != nil {
 		return nil, err
 	}

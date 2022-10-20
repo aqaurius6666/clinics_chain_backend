@@ -10,9 +10,8 @@ import (
 	"sync"
 
 	"github.com/joho/godotenv"
-	//"github.com/minh1611/go_structure/apiservice/src/internal/db"
 	"github.com/minh1611/go_structure/apiservice/src/internal/db"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db/my"
+	"github.com/minh1611/go_structure/apiservice/src/internal/db/psql"
 	"github.com/minh1611/go_structure/apiservice/src/services/authservice"
 )
 
@@ -44,9 +43,9 @@ func main() {
 	}
 
 	// Auto migrate entity to sql "Table"
-	dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
+	dbTables := mainServer.MainRepo.(*psql.ServerCDBRepo).Interfaces
 	// doc for dbTable...: https://go.dev/ref/spec#Passing_arguments_to_..._parameters
-	err = mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
+	err = mainServer.MainRepo.(*psql.ServerCDBRepo).Db.AutoMigrate(dbTables...)
 	if err != nil {
 		fmt.Println(err)
 	}
