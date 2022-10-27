@@ -9,9 +9,9 @@ import (
 	"sync"
 
 	"github.com/joho/godotenv"
-	"github.com/minh1611/go_structure/authservice/src/internal/db"
-	"github.com/minh1611/go_structure/authservice/src/internal/db/my"
-	"github.com/minh1611/go_structure/authservice/src/pb/authpb"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/my"
+	"github.com/minh1611/clinics_chain_management/authservice/src/pb/authpb"
 	"google.golang.org/grpc"
 )
 
@@ -55,7 +55,7 @@ func main() {
 		authpb.RegisterAuthServiceServer(srv, mainServer.ApiServer)
 		fmt.Println("GRPC server is running at port " + os.Getenv("GRPC_PORT"))
 		if err := srv.Serve(grpcListener); err != nil {
-			log.Fatalf("Fail to server: %v", err);
+			log.Fatalf("Fail to server: %v", err)
 		}
 	}()
 

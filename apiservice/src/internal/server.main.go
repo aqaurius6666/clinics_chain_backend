@@ -10,11 +10,12 @@ import (
 	"sync"
 
 	"github.com/joho/godotenv"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db/psql"
-	"github.com/minh1611/go_structure/apiservice/src/services/authservice"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/db"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/db/psql"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/services/authservice"
 )
 
+// change to  main
 func main() {
 	var wg sync.WaitGroup
 
@@ -62,6 +63,6 @@ func main() {
 		}
 		fmt.Println("App is running at port " + os.Getenv("HTTP_PORT"))
 	}()
-
+	fmt.Println("hello may cung")
 	wg.Wait()
 }

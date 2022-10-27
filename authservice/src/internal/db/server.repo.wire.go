@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/authservice/src/internal/db/my"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/my"
 	"golang.org/x/xerrors"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

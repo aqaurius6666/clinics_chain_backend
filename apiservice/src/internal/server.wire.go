@@ -1,15 +1,16 @@
 //go:build wireinject
 // +build wireinject
+
 package main
 
 import (
 	"context"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/apiservice/src/internal/api"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db"
-	"github.com/minh1611/go_structure/apiservice/src/internal/model"
-	"github.com/minh1611/go_structure/apiservice/src/services/authservice"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/api"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/db"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/model"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/services/authservice"
 )
 
 type Server struct {

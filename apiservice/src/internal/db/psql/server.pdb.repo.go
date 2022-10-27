@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db/user"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/db/user"
 	"gorm.io/gorm"
 )
 

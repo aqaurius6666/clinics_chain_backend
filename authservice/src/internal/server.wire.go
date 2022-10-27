@@ -7,9 +7,9 @@ import (
 	"context"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/authservice/src/internal/api"
-	"github.com/minh1611/go_structure/authservice/src/internal/db"
-	"github.com/minh1611/go_structure/authservice/src/internal/model"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/api"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/model"
 )
 
 type Server struct {

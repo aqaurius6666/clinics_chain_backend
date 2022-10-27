@@ -1,4 +1,4 @@
-module github.com/minh1611/go_structure/authservice
+module github.com/minh1611/clinics_chain_management/authservice
 
 go 1.17
 

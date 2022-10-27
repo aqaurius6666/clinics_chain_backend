@@ -2,9 +2,10 @@ package db
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/apiservice/src/internal/db/psql"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/db/psql"
 	"golang.org/x/xerrors"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,6 +18,10 @@ var gormConfig = &gorm.Config{
 	DisableAutomaticPing:                     true,
 	PrepareStmt:                              true,
 	DisableForeignKeyConstraintWhenMigrating: true,
+	NowFunc: func() time.Time {
+		ti, _ := time.LoadLocation("Asia/Bangkok")
+		return time.Now().In(ti)
+	},
 }
 
 func ConnectGorm(dsn DBDsn) (db *gorm.DB, err error) {

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/minh1611/go_structure/authservice/src/internal/utils"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/utils"
 )
 
 type User struct {

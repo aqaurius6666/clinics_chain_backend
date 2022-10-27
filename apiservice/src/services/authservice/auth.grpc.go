@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/minh1611/go_structure/apiservice/src/pb/authpb"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/pb/authpb"
 	"golang.org/x/xerrors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

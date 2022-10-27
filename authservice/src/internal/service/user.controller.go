@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/authservice/src/internal/lib"
-	"github.com/minh1611/go_structure/authservice/src/pb/authpb"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/lib"
+	"github.com/minh1611/clinics_chain_management/authservice/src/pb/authpb"
 )
 
 var UserSet = wire.NewSet(wire.Struct(new(UserController), "*"), wire.Struct(new(UserService), "*"))

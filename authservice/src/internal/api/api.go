@@ -2,9 +2,9 @@ package api
 
 import (
 	"github.com/google/wire"
-	"github.com/minh1611/go_structure/authservice/src/internal/db"
-	"github.com/minh1611/go_structure/authservice/src/internal/model"
-	"github.com/minh1611/go_structure/authservice/src/pb/authpb"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/model"
+	"github.com/minh1611/clinics_chain_management/authservice/src/pb/authpb"
 )
 
 var ApiServerSet = wire.NewSet(wire.Struct(new(ApiServer), "*"))
@@ -15,6 +15,6 @@ var (
 
 type ApiServer struct {
 	authpb.UnimplementedAuthServiceServer `wire:"-"`
-	Model                             model.Server
-	Repo                              db.ServerRepo
+	Model                                 model.Server
+	Repo                                  db.ServerRepo
 }

@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/minh1611/go_structure/apiservice/src/internal/model"
-	"github.com/minh1611/go_structure/apiservice/src/pb"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/internal/model"
+	"github.com/minh1611/clinics_chain_management/apiservice/src/pb"
 )
 
 type UserService struct {
@@ -19,6 +19,6 @@ func (s *UserService) CreateUser(ctx context.Context, req *pb.User) (*pb.User, e
 	return &pb.User{
 		Name: *user.Name,
 		Age:  99,
-		Id:   user.ID.String(),
+		//Id:   user.ID.String(),
 	}, nil
 }

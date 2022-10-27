@@ -1,6 +1,6 @@
 package db
 
-import "github.com/minh1611/go_structure/authservice/src/internal/db/user"
+import "github.com/minh1611/clinics_chain_management/authservice/src/internal/db/user"
 
 type DBDsn string
 
