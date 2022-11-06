@@ -12,3 +12,7 @@ type User struct {
 	Email       *string `gorm:"type:varchar(64)"`
 	Password    *string `gorm:"type:varchar(64)"`
 }
+
+type Search struct {
+	utils.DefaultSearchModel
+}

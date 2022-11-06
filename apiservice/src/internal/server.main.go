@@ -63,6 +63,5 @@ func main() {
 		}
 		fmt.Println("App is running at port " + os.Getenv("HTTP_PORT"))
 	}()
-	fmt.Println("hello may cung")
 	wg.Wait()
 }
