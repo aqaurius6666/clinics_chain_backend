@@ -46,15 +46,50 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 		Repo: serverCDBRepo,
 		Auth: serviceGRPC,
 	}
-	userService := &service.UserService{
+	feedbackService := &service.FeedbackService{
 		Model: serverModel,
 	}
-	userController := service.UserController{
-		S: userService,
+	feedbackController := service.FeedbackController{
+		S: feedbackService,
+	}
+	guestService := &service.GuestService{
+		Model: serverModel,
+	}
+	guestController := service.GuestController{
+		S: guestService,
+	}
+	patientService := &service.PatientService{
+		Model: serverModel,
+	}
+	patientController := service.PatientController{
+		S: patientService,
+	}
+	profileService := &service.ProfileService{
+		Model: serverModel,
+	}
+	profileController := service.ProfileController{
+		S: profileService,
+	}
+	reservationService := &service.ReservationService{
+		Model: serverModel,
+	}
+	reservationController := service.ReservationController{
+		S: reservationService,
+	}
+	treatmentRecordService := &service.TreatmentRecordService{
+		Model: serverModel,
+	}
+	treatmentRecordController := service.TreatmentRecordController{
+		S: treatmentRecordService,
 	}
 	apiService := &api.ApiService{
-		G:    engine,
-		User: userController,
+		G:               engine,
+		Feedback:        feedbackController,
+		Guest:           guestController,
+		Patient:         patientController,
+		Profile:         profileController,
+		Reservation:     reservationController,
+		TreatmentRecord: treatmentRecordController,
 	}
 	server := &Server{
 		ApiServer: apiService,

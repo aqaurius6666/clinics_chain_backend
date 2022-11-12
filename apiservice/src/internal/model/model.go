@@ -9,7 +9,18 @@ import (
 )
 
 type Server interface {
-	UserModel
+	DoctorModel
+	FeedbackModel
+	GuestModel
+	ManagerModel
+	NurseModel
+	PatientModel
+	ProfileModel
+	ReservationModel
+	RevisitationModel
+	ServiceTypeModel
+	StaffWorkingTimeModel
+	TreatmentRecordModel
 }
 
 type ServerModel struct {

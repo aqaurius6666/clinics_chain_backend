@@ -8,15 +8,23 @@ import (
 
 var ApiServiceSet = wire.NewSet(wire.Struct(new(ApiService), "*"),
 	gin.New,
-	service.UserSet,
+	service.FeedbackSet,
+	service.GuestSet,
+	service.PatientSet,
+	service.ProfileSet,
+	service.ReservationSet,
+	service.TreatmentRecordSet,
 )
 
 type ApiService struct {
-	G    *gin.Engine
-	User service.UserController
+	G               *gin.Engine
+	Feedback        service.FeedbackController
+	Guest           service.GuestController
+	Patient         service.PatientController
+	Profile         service.ProfileController
+	Reservation     service.ReservationController
+	TreatmentRecord service.TreatmentRecordController
 }
 
 func (s *ApiService) RegisterEndPoint() {
-	api := s.G.Group("/api")
-	s.UserEndPoint(api)
 }
