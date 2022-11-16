@@ -21,6 +21,7 @@ protodir=../proto
 # go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+go install github.com/envoyproxy/protoc-gen-validate@latest
 
 protoc --go_out ./src/pb --go_opt paths=source_relative \
    --go-grpc_out ./src/pb --go-grpc_opt paths=source_relative \
@@ -34,5 +35,5 @@ protoc --go_out ./src/pb/authpb --go_opt paths=source_relative \
 protoc --go_out ./src/internal/utils/c --go_opt paths=source_relative \
    -I $protodir $protodir/const.proto
 
-# protoc --go_out ./src/pb/validate --go_opt paths=source_relative --validate_out="lang=go:./src/pb/validate" \
-#    -I $protodir $protodir/validate.proto
+protoc --validate_out="lang=go:./src" \
+   -I $protodir $protodir/apiservice.proto
