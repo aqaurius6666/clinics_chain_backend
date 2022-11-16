@@ -13,7 +13,7 @@ import (
 )
 
 type Server struct {
-	ApiServer *api.ApiServer
+	AuthServer *api.AuthServer
 	MainRepo  db.ServerRepo
 }
 
@@ -24,7 +24,7 @@ type ServerOptions struct {
 func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 	wire.Build(
 		wire.FieldsOf(&opts, "DBDsn"),
-		api.ApiServerSet,
+		api.AuthServerSet,
 		model.ServerModelSet,
 		db.ServerRepoSet,
 		wire.Struct(new(Server), "*"),

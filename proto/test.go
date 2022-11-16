@@ -2,25 +2,18 @@ package main
 
 import "fmt"
 
-type A interface {
-	Test(n int)
+type B struct {
+	g string
 }
 
-type B struct {}
-
-func (b B) Test(n int) {
-	fmt.Println(n + 1)
-}
-
-type C struct {
-	a A
-}
-
-func (c C) Test(n int) {
-	fmt.Println(n + 1)
+type A struct {
+	a string
+	b int
+	s B
 }
 
 func main() {
-	test := C{}
-	test.a.Test(4)
+	a := 5
+	b, ok := interface{}(a).(int)
+	fmt.Println(b, ok)
 }

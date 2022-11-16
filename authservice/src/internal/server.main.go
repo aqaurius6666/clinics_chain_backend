@@ -10,7 +10,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db"
-	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/my"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/psql"
 	"github.com/minh1611/clinics_chain_management/authservice/src/pb/authpb"
 	"google.golang.org/grpc"
 )
@@ -37,8 +37,8 @@ func main() {
 
 	// Auto migrate entity to sql "Table"
 	// doc for dbTable...: https://go.dev/ref/spec#Passing_arguments_to_..._parameters
-	dbTables := mainServer.MainRepo.(*my.ServerCDBRepo).Interfaces
-	mainServer.MainRepo.(*my.ServerCDBRepo).Db.AutoMigrate(dbTables...)
+	dbTables := mainServer.MainRepo.(*psql.ServerCDBRepo).Interfaces
+	mainServer.MainRepo.(*psql.ServerCDBRepo).Db.AutoMigrate(dbTables...)
 
 	// Start GRPC Server
 	grpcListener, err := net.Listen("tcp", ":"+os.Getenv("GRPC_PORT"))
@@ -52,7 +52,7 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		authpb.RegisterAuthServiceServer(srv, mainServer.ApiServer)
+		authpb.RegisterAuthServiceServer(srv, mainServer.AuthServer)
 		fmt.Println("GRPC server is running at port " + os.Getenv("GRPC_PORT"))
 		if err := srv.Serve(grpcListener); err != nil {
 			log.Fatalf("Fail to server: %v", err)

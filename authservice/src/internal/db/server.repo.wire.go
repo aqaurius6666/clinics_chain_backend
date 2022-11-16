@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"github.com/google/wire"
-	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/my"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/psql"
 	"golang.org/x/xerrors"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var ServerRepoSet = wire.NewSet(ConnectGorm, wire.Bind(new(ServerRepo), new(*my.ServerCDBRepo)), my.CDBRepoSet)
+var ServerRepoSet = wire.NewSet(ConnectGorm, wire.Bind(new(ServerRepo), new(*psql.ServerCDBRepo)), psql.CDBRepoSet)
 
 var gormConfig = &gorm.Config{
 	//SkipDefaultTransaction:                   true,

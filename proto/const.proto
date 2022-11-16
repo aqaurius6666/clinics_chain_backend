@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package const;
+
+option go_package = "./c";
+
+enum ROLE {
+   PATIENT = 0;
+   DOCTOR = 1;
+   NURSE = 2;
+   BRANCH_MANAGER = 3;
+   ADMIN = 4;
+}
+
+enum OTP_TYPE {
+    REGISTER = 0;
+    FORGOT_PASSWORD = 1;    
+}

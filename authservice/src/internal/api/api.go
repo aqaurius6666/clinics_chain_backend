@@ -7,13 +7,13 @@ import (
 	"github.com/minh1611/clinics_chain_management/authservice/src/pb/authpb"
 )
 
-var ApiServerSet = wire.NewSet(wire.Struct(new(ApiServer), "*"))
+var AuthServerSet = wire.NewSet(wire.Struct(new(AuthServer), "*"))
 
 var (
-	_ authpb.AuthServiceServer = (*ApiServer)(nil)
+	_ authpb.AuthServiceServer = (*AuthServer)(nil)
 )
 
-type ApiServer struct {
+type AuthServer struct {
 	authpb.UnimplementedAuthServiceServer `wire:"-"`
 	Model                                 model.Server
 	Repo                                  db.ServerRepo

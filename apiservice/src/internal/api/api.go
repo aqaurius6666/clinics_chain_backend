@@ -27,4 +27,5 @@ type ApiService struct {
 }
 
 func (s *ApiService) RegisterEndPoint() {
+	// Patient
 }

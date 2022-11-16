@@ -1,26 +1,33 @@
 syntax = "proto3";
 package apiservice;
+
+//import "const.proto";
+import "validate.proto";
+
 option go_package = "./pb";
 
 
 service PostUser {
-   rpc CreateNewUser(NewUser) returns (User) {}
+   rpc CreateNewUser(UserPostRequest) returns (UserPostResponse) {}
 }
 
-message NewUser {
-   string name = 1;
-   int32 age = 2;
-   string phoneNumber = 3;
-   string email = 4;
-   string password = 5;
+message UserPostRequest {
+   string email = 1 [(validate.rules).string.email = true];
+   string password = 2;
+   string name = 3;
+   int32 age = 4;
+   string phoneNumber = 5;
+   string address = 6;
 }
 
-message User {
-   string name = 1;
-   int32 age = 2;
-   string phoneNumber = 3;
-   string email = 4;
-   string password = 5;
-   string id = 6;
+message UserPostResponse {
+  int32 code = 1;
+  bool success = 2;
+  Data data = 3;
+  message Data {
+   string otpId = 1;
+   string mail = 2;
+   string phone = 3;
+  }
 }
 

@@ -10,7 +10,7 @@ import (
 	"context"
 	"github.com/minh1611/clinics_chain_management/authservice/src/internal/api"
 	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db"
-	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/my"
+	"github.com/minh1611/clinics_chain_management/authservice/src/internal/db/psql"
 	"github.com/minh1611/clinics_chain_management/authservice/src/internal/model"
 )
 
@@ -22,8 +22,8 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	dbInterfaces := my.InterfaceProvider()
-	serverCDBRepo := &my.ServerCDBRepo{
+	dbInterfaces := psql.InterfaceProvider()
+	serverCDBRepo := &psql.ServerCDBRepo{
 		Db:         gormDB,
 		Context:    ctx,
 		Interfaces: dbInterfaces,
@@ -32,13 +32,13 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 		Ctx:  ctx,
 		Repo: serverCDBRepo,
 	}
-	apiServer := &api.ApiServer{
+	authServer := &api.AuthServer{
 		Model: serverModel,
 		Repo:  serverCDBRepo,
 	}
 	server := &Server{
-		ApiServer: apiServer,
-		MainRepo:  serverCDBRepo,
+		AuthServer: authServer,
+		MainRepo:   serverCDBRepo,
 	}
 	return server, nil
 }
@@ -46,8 +46,8 @@ func InitMainServer(ctx context.Context, opts ServerOptions) (*Server, error) {
 // server.wire.go:
 
 type Server struct {
-	ApiServer *api.ApiServer
-	MainRepo  db.ServerRepo
+	AuthServer *api.AuthServer
+	MainRepo   db.ServerRepo
 }
 
 type ServerOptions struct {

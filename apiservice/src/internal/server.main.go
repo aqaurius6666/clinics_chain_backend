@@ -22,7 +22,6 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	// Get variable from .env
 	err := godotenv.Load("../../deploy/dev/.env")
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
