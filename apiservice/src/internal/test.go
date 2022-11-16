@@ -8,8 +8,8 @@ import (
 var MAIL_SMTP_HOST = "email-smtp.ap-southeast-1.amazonaws.com"
 var MAIL_SMTP_PORT = "587"
 var MAIL_SMTP_SENDER = "mt766157@gmail.com"
-var MAIL_SMTP_USERNAME = "AKIAV5FTKULOBNIXUONU"
-var MAIL_SMTP_PASSWORD = "BOrJobnxU9gBACkSq7SZsexY06LP8lQyUlLJm60pIc30"
+var MAIL_SMTP_USERNAME = ""
+var MAIL_SMTP_PASSWORD = ""
 var MAIL_SMTP_AWS_REGION = "ap-southeast-1"
 
 func a() {
